@@ -1,21 +1,20 @@
 import java.util.Scanner;
 class Nodo {
-    int valor;       // Valor armazenado no nodo
-    Nodo prox;      // Referência para o próximo nodo
+    int valor;       
+    Nodo prox;      
 
-    // Construtor do Nodo
+    
     public Nodo(int valor) {
         this.valor = valor;
         this.prox = null;
     }
 }
 
-// Classe ListaEncadeada
+
 class ListaEncadeada {
     private Nodo primeiro;  // Referência para o primeiro nodo
     private int tamanho;    // Tamanho da lista
 
-    // Construtor da ListaEncadeada
     public ListaEncadeada() {
         this.primeiro = null;
         this.tamanho = 0;
@@ -45,7 +44,7 @@ class ListaEncadeada {
     // Retorna o nodo na posição especificada ou excessao se não existir
     public Nodo get(int index) {
         if (index < 0 || index >= tamanho) {
-            throw new IndexOutOfBoundsException("Índice " + index + " fora dos limites da lista.");  // Índice inválido
+            throw new IndexOutOfBoundsException("Índice " + index + " fora dos limites da lista.");  
         }
         Nodo atual = primeiro;
         for (int i = 0; i < index; i++) {
