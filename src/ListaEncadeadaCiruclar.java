@@ -114,13 +114,16 @@ class ListaCircular {
         tamanho--;
     }
 
-    //ajeitar dps o exibir lista
     public void exibirLista() {
-        Nodo atual = primeiro;
-        while (atual != null) {
-            System.out.print(atual.valor + " ");
-            atual = atual.prox;
+        if(cabeca == null){
+            System.out.println("A lista esta vazia");
+            return;
         }
+        Nodo atual = cabeca;
+        do {
+            System.out.print(atual.valor + "");
+            atual = atual.prox;
+        }while (atual != cabeca);
         System.out.println();
     }
 }
