@@ -10,7 +10,7 @@ class Nodo {
     }
 }
 
-// Classe Aluno
+
 class Aluno {
     int matricula;
     String nome;
@@ -190,7 +190,7 @@ public class TabelaHashEncadeada {
                     System.out.print("Digite a matrícula para remover: ");
                     matricula = scanner.nextInt();
 
-                    // Tenta buscar o nome do aluno pela matrícula antes de remover
+                    //busca o nome do aluno pela matrícula antes de remover
                     String nomeAluno = tabelaHash.pegarValor(matricula);
 
                     if (nomeAluno != null) {
