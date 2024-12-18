@@ -1,22 +1,26 @@
-import java.util.Scanner;
-class Nodo {
-    int valor;       
-    Nodo prox;      
+package Listas.ListaEncadeadaCircular;
 
-    
+import java.util.Scanner;
+
+class Nodo {
+    int valor;
+    Nodo prox;
+
+
     public Nodo(int valor) {
         this.valor = valor;
         this.prox = null;
     }
 }
 
+class ListaCircular {
+    private Nodo cabeca;  // Referência para o primeiro nodo
+    private Nodo rabo;    // ultimo da lista
+    private int tamanho; //tamnaho lista
 
-class ListaEncadeada {
-    private Nodo primeiro;  // Referência para o primeiro nodo
-    private int tamanho;    // Tamanho da lista
-
-    public ListaEncadeada() {
-        this.primeiro = null;
+    public ListaCircular() {
+        this.cabeca = null;
+        this.rabo = null;
         this.tamanho = 0;
     }
 
@@ -29,14 +33,13 @@ class ListaEncadeada {
     public void add(int elemento) {
         Nodo novoNodo = new Nodo(elemento);
 
-        if (primeiro == null) {
-            primeiro = novoNodo;
-        } else {
-            Nodo atual = primeiro;
-            while (atual.prox != null) {
-                atual = atual.prox;
-            }
-            atual.prox = novoNodo;
+        if (cabeca == null) {
+            cabeca = novoNodo;
+            novoNodo.prox = cabeca; //faz o circulo
+        } else{
+            rabo.prox =novoNodo;
+            rabo = novoNodo;
+            rabo.prox= cabeca; //faz o ciculo
         }
         tamanho++;
     }
@@ -44,9 +47,9 @@ class ListaEncadeada {
     // Retorna o nodo na posição especificada ou excessao se não existir
     public Nodo get(int index) {
         if (index < 0 || index >= tamanho) {
-            throw new IndexOutOfBoundsException("Índice " + index + " fora dos limites da lista.");  
+            throw new IndexOutOfBoundsException("Índice " + index + " fora dos limites da lista.");
         }
-        Nodo atual = primeiro;
+        Nodo atual = cabeca;
         for (int i = 0; i < index; i++) {
             atual = atual.prox;
         }
@@ -61,17 +64,26 @@ class ListaEncadeada {
 
         Nodo novoNodo = new Nodo(elemento);
 
-        // Se for no início da lista
-        if (index == 0) {
-            novoNodo.prox = primeiro;
-            primeiro = novoNodo;
+        if (index == 0) {  // Adiciona no início da lista (cabeça)
+            if (cabeca == null) {
+                cabeca = novoNodo;
+                rabo = novoNodo;
+                novoNodo.prox = cabeca;  // O único nodo aponta para si mesmo
+            } else {
+                novoNodo.prox = cabeca;
+                cabeca = novoNodo;
+                rabo.prox = cabeca;  // O rabo aponta para o novo cabeça
+            }
         } else {
-            Nodo atual = primeiro;
+            Nodo atual = cabeca;
             for (int i = 0; i < index - 1; i++) {
                 atual = atual.prox;
             }
             novoNodo.prox = atual.prox;
             atual.prox = novoNodo;
+            if (novoNodo.prox == cabeca) {  // Se o novo nodo for o último
+                rabo = novoNodo;
+            }
         }
         tamanho++;
     }
@@ -84,31 +96,44 @@ class ListaEncadeada {
 
         // Se for o primeiro elemento
         if (index == 0) {
-            primeiro = primeiro.prox;
-        } else {
-            Nodo atual = primeiro;
+            if(cabeca == rabo){
+                cabeca = null;
+                rabo = null;
+            }else{
+                cabeca= cabeca.prox;
+                rabo.prox=cabeca;
+            }
+        }else {
+            Nodo atual = cabeca;
             for (int i = 0; i < index - 1; i++) {
                 atual = atual.prox;
             }
-            atual.prox = atual.prox.prox;
+            atual.prox = atual.prox.prox;  // Remove o nodo na posição indicada
+            if (atual.prox == cabeca) {  // Se a remoção foi no rabo
+                rabo = atual;
+            }
         }
         tamanho--;
     }
 
     public void exibirLista() {
-        Nodo atual = primeiro;
-        while (atual != null) {
-            System.out.print(atual.valor + " ");
-            atual = atual.prox;
+        if(cabeca == null){
+            System.out.println("A lista esta vazia");
+            return;
         }
+        Nodo atual = cabeca;
+        do {
+            System.out.print(atual.valor + "");
+            atual = atual.prox;
+        }while (atual != cabeca);
         System.out.println();
     }
 }
 
-public class ListaEncadeadaSimples {
+public class ListaEncadeadaCiruclar {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ListaEncadeada lista = new ListaEncadeada();
+        ListaCircular lista = new ListaCircular();
 
         boolean continuar = true;
 
